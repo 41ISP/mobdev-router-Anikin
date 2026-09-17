@@ -1,7 +1,10 @@
-export default function Header({ currentPage, onNavigate, onSearch }) {
+import {Link, NavLink, useNavigate} from "react-router-dom";
+export default function Header() {
+  const navigate = useNavigate()
+
   function handleSearchKeyDown(e) {
     if (e.key === 'Enter' && e.target.value.trim()) {
-      onSearch(e.target.value.trim());
+      navigate("/search?q=" + encodeURIComponent(e.target.value.trim()))
       e.target.value = '';
     }
   }
@@ -9,20 +12,19 @@ export default function Header({ currentPage, onNavigate, onSearch }) {
   return (
     <header className="site-header">
       <div className="header-inner">
-        <a
-          href="/"
-          className="brand"
-          onClick={e => { e.preventDefault(); onNavigate('home'); }}
+        <Link  
+          to="/"
+          className="brand" 
+          // onClick={e => { e.preventDefault(); onNavigate('home'); }}
         >
           <div className="brand-mark">t</div>
           <div className="brand-name">Terra</div>
-        </a>
-
+        </Link>
         <nav className="main-nav">
-          <NavItem label="Главная" page="home" currentPage={currentPage} onNavigate={onNavigate} />
-          <NavItem label="Каталог" page="catalog" currentPage={currentPage} onNavigate={onNavigate} />
-          <NavItem label="О нас" page="about" currentPage={currentPage} onNavigate={onNavigate} />
-          <NavItem label="Контакты" page="contacts" currentPage={currentPage} onNavigate={onNavigate} />
+          <NavLink className={({isActive}) => `nav-link${ isActive ? " active" : ""}`} to="/" label="Главная">Главная</NavLink>
+          <NavLink className={({isActive}) => `nav-link${ isActive ? " active" : ""}`} to="/catalog" label="Каталог" >Каталог</NavLink>
+          <NavLink className={({isActive}) => `nav-link${ isActive ? " active" : ""}`} to="/about" label="О нас" >О нас</NavLink>
+          <NavLink className={({isActive}) => `nav-link${ isActive ? " active" : ""}`} to="/contacts" label="Контакты" >Контакты</NavLink>
         </nav>
 
         <div className="header-search">
