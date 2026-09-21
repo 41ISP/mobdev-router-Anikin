@@ -3,7 +3,7 @@ import { categories } from "../data/products";
 
 export default function CategoryFilter() {
 const [searchParams, setSearchParams] = useSearchParams()
-const activeCategory = searchParams.get("q") || ""
+const activeCategory = searchParams.get("category") || ""
 const handleSelect = () => 
 {
   setSearchParams(id ? {category: id} : {} )
@@ -14,7 +14,10 @@ const handleSelect = () =>
         <button
           key={cat.id || 'all'}
           type="button"
-          className={'filter-chip' + (cat.id === activeCategory ? ' active' : '')}
+          className={
+            "filter-chip" + 
+            (cat.id === activeCategory ? " active" : "")
+          }
           onClick={() => handleSelect(cat.id)}
         >
           {cat.label}
